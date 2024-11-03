@@ -20,6 +20,7 @@ def connect_to_db():
     engine = create_engine(connection_string)
     return engine
 
+@st.cache_data
 def load_data()-> pd.DataFrame:
     engine = connect_to_db()
     query = "SELECT * FROM dw_lcs.solar_summary_processed"
