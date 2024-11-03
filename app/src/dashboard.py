@@ -8,13 +8,15 @@ import os
 import sys 
 sys.path.append(os.path.dirname(os.path.abspath(__file__))+"../")
 
+# HEADERS
 st.set_page_config(page_title="Home Solar Production", layout='wide')
 st.title("HOME SOLAR DATA")
 st.subheader("Daily updated energy generation from residential solar panel", divider='gray')
 
-# Load and process the data from the database
+# GETTING THE DATA
 data, data_hourly = get_data.load_data()
 
+# BIG NUMBERS
 kWh_total, kWh_current, last_update = st.columns([1,4,1])
 
 with kWh_total:
@@ -23,7 +25,6 @@ with kWh_total:
     st.metric("**Total kWh**", total)
 
 with kWh_current:
-    # Filtrar apenas os registros do mês e ano atuais
     current_month = dt.now().month
     current_year = dt.now().year    
     current_month_data = data[(data['prod_date'].dt.month == current_month) & (data['prod_date'].dt.year == current_year)]
@@ -34,6 +35,8 @@ with kWh_current:
 with last_update:
     max_date = data['prod_date'].max().strftime('%A, %Y-%m-%d ')
     st.metric("**Latest data entry**", max_date)
+
+# CHARTS
 
 monthly_barchart, weekly_linechart = st.columns(2)
 
@@ -67,8 +70,7 @@ with monthly_barchart:
     
     chart = chart + text
     chart = chart.configure_axis(grid=False)
-    
-    # Display the chart in Streamlit
+
     st.altair_chart(chart, use_container_width=True)
 
 with weekly_linechart:
@@ -228,7 +230,7 @@ with autumn:
     data_summer = (
         data_summer
         .groupby('month')
-        .agg(total=('total', 'mean'))  # Calcula a média da geração diária de kWh
+        .agg(total=('total', 'mean')) 
         .reset_index()
     )
 
@@ -236,18 +238,17 @@ with autumn:
 
     # Create the Altair bar chart
     chart6 = alt.Chart(data_summer).mark_bar(color='#F5BC00').encode(
-        x=alt.X('month:O',  # Change to ordinal for discrete months
+        x=alt.X('month:O', 
                 sort=month_order,
                 title=None,
                 axis=alt.Axis(labelAngle=0, labelFontSize=15)),
-        y=alt.Y('total:Q', title=None, axis=None)  # Display the average kWh
+        y=alt.Y('total:Q', title=None, axis=None) 
     ).properties(
         title="Average daily kWh",
         width=800,
         height=400
     )
     
-    # Add text labels to show exact values
     text = chart6.mark_text(
         align='center',
         baseline='middle',
@@ -259,11 +260,9 @@ with autumn:
         text=alt.Text('total:Q', format='.1f')
     )
     
-    # Combine the bar chart with text labels
     chart6 = chart6 + text
     chart6 = chart6.configure_axis(grid=False)
-    
-    # Display the chart in Streamlit
+
     st.altair_chart(chart6, use_container_width=True)
 
 with winter:
@@ -275,26 +274,24 @@ with winter:
     data_summer = (
         data_summer
         .groupby('month')
-        .agg(total=('total', 'mean'))  # Calcula a média da geração diária de kWh
+        .agg(total=('total', 'mean')) 
         .reset_index()
     )
 
     month_order = ['June', 'July', 'August', 'September']
 
-    # Create the Altair bar chart
     chart7 = alt.Chart(data_summer).mark_bar(color='#219ebc').encode(
-        x=alt.X('month:O',  # Change to ordinal for discrete months
+        x=alt.X('month:O',  
                 sort=month_order,
                 title=None,
                 axis=alt.Axis(labelAngle=0, labelFontSize=15)),
-        y=alt.Y('total:Q', title=None, axis=None)  # Display the average kWh
+        y=alt.Y('total:Q', title=None, axis=None)  
     ).properties(
         title="Average daily kWh",
         width=800,
         height=400
     )
     
-    # Add text labels to show exact values
     text = chart7.mark_text(
         align='center',
         baseline='middle',
@@ -306,11 +303,9 @@ with winter:
         text=alt.Text('total:Q', format='.1f')
     )
     
-    # Combine the bar chart with text labels
     chart7 = chart7 + text
     chart7 = chart7.configure_axis(grid=False)
     
-    # Display the chart in Streamlit
     st.altair_chart(chart7, use_container_width=True)
 
 with spring:
@@ -322,26 +317,24 @@ with spring:
     data_summer = (
         data_summer
         .groupby('month')
-        .agg(total=('total', 'mean'))  # Calcula a média da geração diária de kWh
+        .agg(total=('total', 'mean'))
         .reset_index()
     )
 
     month_order = ['September', 'October', 'November', 'September']
 
-    # Create the Altair bar chart
     chart8 = alt.Chart(data_summer).mark_bar(color='#588157').encode(
-        x=alt.X('month:O',  # Change to ordinal for discrete months
+        x=alt.X('month:O', 
                 sort=month_order,
                 title=None,
                 axis=alt.Axis(labelAngle=0, labelFontSize=15)),
-        y=alt.Y('total:Q', title=None, axis=None)  # Display the average kWh
+        y=alt.Y('total:Q', title=None, axis=None) 
     ).properties(
         title="Average daily kWh",
         width=800,
         height=400
     )
     
-    # Add text labels to show exact values
     text = chart8.mark_text(
         align='center',
         baseline='middle',
@@ -353,9 +346,7 @@ with spring:
         text=alt.Text('total:Q', format='.1f')
     )
     
-    # Combine the bar chart with text labels
     chart8 = chart8 + text
     chart8 = chart8.configure_axis(grid=False)
-    
-    # Display the chart in Streamlit
+
     st.altair_chart(chart8, use_container_width=True)
