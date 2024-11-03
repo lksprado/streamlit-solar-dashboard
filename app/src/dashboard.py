@@ -4,6 +4,9 @@ from datetime import datetime as dt
 import altair as alt
 import numpy as np
 import pandas as pd 
+import os
+import sys 
+sys.path.append(os.path.dirname(os.path.abspath(__file__))+"../")
 
 st.set_page_config(page_title="Home Solar Production", layout='wide')
 st.title("HOME SOLAR DATA")
