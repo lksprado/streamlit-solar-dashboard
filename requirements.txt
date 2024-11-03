@@ -2,5 +2,5 @@ pandas
 numpy
 streamlit
 psycopg2-binary
-sqlachemy
+sqlalchemy
 python-dotenv
