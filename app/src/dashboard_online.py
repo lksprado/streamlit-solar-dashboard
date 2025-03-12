@@ -11,8 +11,7 @@ import sys
 # HEADERS
 st.set_page_config(page_title="Home Solar Production Online", layout='wide')
 st.title("HOME SOLAR DATA")
-st.subtitle("Daily updated energy generation from residential solar panel", divider='gray')
-
+st.subheader("Daily updated energy generation from residential solar panel", divider='gray')
 # GETTING THE DATA
 data, data_hourly = get_data.load_data_csv()
 
