@@ -11,7 +11,7 @@ import sys
 # HEADERS
 st.set_page_config(page_title="Home Solar Production Online", layout='wide')
 st.title("HOME SOLAR DATA")
-st.title("Daily updated energy generation from residential solar panel", divider='gray')
+st.subtitle("Daily updated energy generation from residential solar panel", divider='gray')
 
 # GETTING THE DATA
 data, data_hourly = get_data.load_data_csv()
@@ -41,7 +41,7 @@ with last_update:
 monthly_barchart, weekly_linechart = st.columns(2)
 
 with monthly_barchart:
-    st.title("Monthly kWh")
+    st.header("Monthly kWh")
     
     monthly_data = data.resample('ME', on='prod_date').sum(numeric_only=True).reset_index()
     monthly_data['formatted_date'] = monthly_data['prod_date'].dt.strftime('%b/%y')
@@ -74,7 +74,7 @@ with monthly_barchart:
     st.altair_chart(chart, use_container_width=True)
 
 with weekly_linechart:
-    st.title("Weekly kWh")
+    st.header("Weekly kWh")
 
     weekly_data = data.resample('W', on='prod_date').sum(numeric_only=True).reset_index()
 
@@ -99,7 +99,7 @@ daily_heatmap, hourly_heatmap = st.columns(2)
 
 
 with daily_heatmap:
-    st.title("Daily heatmap kWh")
+    st.header("Daily heatmap kWh")
     data['day'] = data['prod_date'].dt.day
     data['month_year'] = data['prod_date'].dt.strftime('%b/%Y') 
     data['month_year_sort'] = data['prod_date'].dt.to_period('M').dt.to_timestamp()
@@ -120,7 +120,7 @@ with daily_heatmap:
     st.altair_chart(chart3, use_container_width=True)
 
 with hourly_heatmap:
-    st.title("Daylight hourly heatmap kWh")
+    st.header("Daylight hourly heatmap kWh")
     data_hourly['hour'] = data_hourly['prod_datehour'].dt.hour
     data_hourly['month_year'] = data_hourly['prod_datehour'].dt.strftime('%b/%Y') 
     data_hourly['month_year_sort'] = data_hourly['prod_datehour'].dt.to_period('M').dt.to_timestamp()
@@ -175,7 +175,7 @@ df_resultado = pd.merge_asof(
 summer, autumn, winter, spring = st.columns(4)
 
 with summer:
-    st.title("Summer")
+    st.header("Summer")
     
     filter_summer = ['Summer']
     data_summer = df_resultado[df_resultado['season'].isin(filter_summer)]
@@ -222,7 +222,7 @@ with summer:
     st.altair_chart(chart5, use_container_width=True)
 
 with autumn:
-    st.title("Autumn")
+    st.header("Autumn")
     
     filter_summer = ['Autumn']
     data_summer = df_resultado[df_resultado['season'].isin(filter_summer)]
@@ -266,7 +266,7 @@ with autumn:
     st.altair_chart(chart6, use_container_width=True)
 
 with winter:
-    st.title("Winter")
+    st.header("Winter")
     
     filter_summer = ['Winter']
     data_summer = df_resultado[df_resultado['season'].isin(filter_summer)]
@@ -309,7 +309,7 @@ with winter:
     st.altair_chart(chart7, use_container_width=True)
 
 with spring:
-    st.title("Spring")
+    st.header("Spring")
     
     filter_summer = ['Spring']
     data_summer = df_resultado[df_resultado['season'].isin(filter_summer)]
