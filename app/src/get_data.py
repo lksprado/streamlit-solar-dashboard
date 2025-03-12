@@ -37,6 +37,19 @@ def load_data()-> pd.DataFrame:
     
     return df, df2
 
+def load_data_csv()-> pd.DataFrame:
+
+    # Load data into a DataFrame
+    df = pd.read_csv('data/solar_summary.csv')
+    df2 = pd.read_csv('data/solar_hourly.csv')
+    
+    
+    df['prod_date'] = pd.to_datetime(df['prod_date'])
+    df2['prod_datehour'] = pd.to_datetime(df2['prod_datehour'])
+    
+    return df, df2
+
+
 def monthly_chart(df: pd.DataFrame)->pd.DataFrame:
     df1 = df.resample('M', on='prod_date').sum(numeric_only=True)
     return df1
